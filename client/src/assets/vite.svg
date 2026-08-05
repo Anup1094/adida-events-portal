@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" fill="none">
+
+  <!-- Outer Diamond -->
+  <rect x="35" y="35" width="130" height="130" transform="rotate(45 100 100)" stroke="black" stroke-width="14"></rect>
+
+  <!-- Inner Diamond -->
+  <rect x="58" y="58" width="84" height="84" transform="rotate(45 100 100)" stroke="black" stroke-width="10"></rect>
+
+  <!-- Left Arrow -->
+  <polygon points="22,100 48,84 48,94 68,94 68,106 48,106 48,116" fill="black"></polygon>
+
+  <!-- Right Arrow -->
+  <polygon points="178,100 152,84 152,94 132,94 132,106 152,106 152,116" fill="black"></polygon>
+
+</svg>

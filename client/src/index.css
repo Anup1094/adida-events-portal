@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ================= DESIGN TOKENS ================= */
+/* Adida Events — premium light theme. The diamond motif below echoes the
+   logo mark and is reused as this brand's signature structural device. */
+@theme {
+  --color-ivory: #faf5f3;
+  --color-surface: #ffffff;
+  --color-blush: #f3e9ee;
+  --color-ink: #241528;
+  --color-ink-muted: #6e5d68;
+  --color-wine: #7a1f4b;
+  --color-wine-dark: #591537;
+  --color-wine-light: #a63a70;
+  --color-gold: #b8902e;
+  --color-gold-light: #d9b968;
+  --color-border: #e8dadf;
+
+  --font-display: "Cormorant Garamond", serif;
+  --font-heading: "Poppins", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+}
+
+.font-serif,
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+::selection {
+  background-color: var(--color-wine);
+  color: var(--color-ivory);
+}
+
+/* ================= SIGNATURE DIAMOND MOTIF ================= */
+
+.diamond {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  background-color: var(--color-gold);
+  border-radius: 1px;
+}
+
+.diamond-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diamond-divider::before,
+.diamond-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, var(--color-border));
+}
+
+.diamond-divider::after {
+  background: linear-gradient(90deg, var(--color-border), transparent);
+}
+
+/* ================= SCROLL-REVEAL ANIMATION ================= */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Swiper Pagination */ 
+
+.gallerySwiper .swiper-pagination-bullet{
+    width:10px;
+    height:10px;
+    background:#d8c4cd;
+    opacity:1;
+}
+
+.gallerySwiper .swiper-pagination-bullet-active{
+    width:30px;
+    border-radius:999px;
+    background:#7a1f4b;
+}
+
+/* Navigation */
+
+.gallerySwiper .swiper-button-next,
+.gallerySwiper .swiper-button-prev{
+
+    color:#faf5f3;
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+    background:#241528;
+    border:1px solid #e8dadf;
+
+    transition:.3s;
+}
+
+.gallerySwiper .swiper-button-next:hover,
+.gallerySwiper .swiper-button-prev:hover{
+
+    background:#7a1f4b;
+}
+
+.gallerySwiper .swiper-button-next,
+.gallerySwiper .swiper-button-prev {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(36, 21, 40, 0.9);
+    color: #fff;
+}
+
+.gallerySwiper .swiper-button-next::after,
+.gallerySwiper .swiper-button-prev::after {
+    font-size: 12px !important;
+    font-weight: 700;
+}
+
+/* ================= SMOOTH COVERFLOW TRANSITIONS ================= */
+
+.gallerySwiper .swiper-slide {
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+}
+
+.gallerySwiper .swiper-wrapper {
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallerySwiper .swiper-slide .group {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.5s ease;
+}
+
+/* Dim non-active coverflow slides slightly for depth */
+.gallerySwiper .swiper-slide:not(.swiper-slide-active) .group {
+    opacity: 0.96;
+}
+
+.gallerySwiper .swiper-slide-active .group {
+    opacity: 1;
+}
