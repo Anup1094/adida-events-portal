@@ -239,13 +239,20 @@ const GalleryManager = () => {
                 <label className="block text-sm font-semibold text-ink mb-2">
                   Category
                 </label>
-                <input
-                  type="text"
+                <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full rounded-xl border border-border px-4 py-3 outline-none focus:border-wine"
-                  placeholder="Weddings, Corporate, etc."
-                />
+                >
+                  <option value="">Select category</option>
+                  <option value="Weddings">Weddings</option>
+                  <option value="Birthdays">Birthdays</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Engagements">Engagements</option>
+                  <option value="Anniversaries">Anniversaries</option>
+                  <option value="Baby Showers">Baby Showers</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               {/* Actions */}
@@ -349,4 +356,3 @@ const GalleryManager = () => {
 };
 
 export default GalleryManager;
-

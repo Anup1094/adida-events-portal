@@ -17,11 +17,7 @@ export const getEvent = async (id) => {
 // ================= CREATE EVENT =================
 
 export const createEvent = async (formData) => {
-  const { data } = await API.post("/events", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await API.post("/events", formData);
 
   return data;
 };
@@ -29,11 +25,7 @@ export const createEvent = async (formData) => {
 // ================= UPDATE EVENT =================
 
 export const updateEvent = async (id, formData) => {
-  const { data } = await API.put(`/events/${id}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await API.put(`/events/${id}`, formData);
 
   return data;
 };

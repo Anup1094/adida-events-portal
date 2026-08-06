@@ -14,11 +14,7 @@ export const fetchServices = async () => {
 
 export const createService = async (formData) => {
   try {
-    const { data } = await API.post("/services", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await API.post("/services", formData);
     return { success: true, service: data.service };
   } catch (error) {
     return {
@@ -30,11 +26,7 @@ export const createService = async (formData) => {
 
 export const updateService = async (id, formData) => {
   try {
-    const { data } = await API.put(`/services/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await API.put(`/services/${id}`, formData);
     return { success: true, service: data.service };
   } catch (error) {
     return {
@@ -55,4 +47,3 @@ export const deleteService = async (id) => {
     };
   }
 };
-

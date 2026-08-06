@@ -14,11 +14,7 @@ export const fetchTestimonials = async () => {
 
 export const createTestimonial = async (formData) => {
   try {
-    const { data } = await API.post("/testimonials", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await API.post("/testimonials", formData);
     return { success: true, testimonial: data.testimonial };
   } catch (error) {
     return {
@@ -30,11 +26,7 @@ export const createTestimonial = async (formData) => {
 
 export const updateTestimonial = async (id, formData) => {
   try {
-    const { data } = await API.put(`/testimonials/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await API.put(`/testimonials/${id}`, formData);
     return { success: true, testimonial: data.testimonial };
   } catch (error) {
     return {
@@ -55,4 +47,3 @@ export const deleteTestimonial = async (id) => {
     };
   }
 };
-

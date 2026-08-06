@@ -7,8 +7,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   ArrowLeft,
-  Bell,
-  Search,
   ChevronDown,
   User,
   Settings,
@@ -23,7 +21,6 @@ const Header = ({
 const location = useLocation();
 
 const [showProfileMenu, setShowProfileMenu] = useState(false);
-const [search, setSearch] = useState("");
 
 const admin =
   JSON.parse(localStorage.getItem("user")) || {
@@ -99,36 +96,6 @@ return (
       {/* Right */}
 
       <div className="flex items-center gap-3">
-
-        <div className="relative hidden lg:block">
-
-          <Search
-            size={18}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted"
-          />
-
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-64 rounded-xl border border-border bg-ivory py-2 pl-10 pr-4 outline-none focus:border-wine"
-          />
-
-        </div>
-                {/* Notification */}
-
-        <button
-          type="button"
-          className="relative rounded-xl p-2.5 transition hover:bg-blush"
-        >
-          <Bell
-            size={21}
-            className="text-ink-muted"
-          />
-
-          <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500"></span>
-        </button>
 
         {/* Profile */}
 

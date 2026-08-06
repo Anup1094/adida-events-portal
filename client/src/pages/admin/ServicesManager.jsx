@@ -299,14 +299,23 @@ const ServicesManager = () => {
                 <label className="block text-sm font-semibold text-ink mb-2">
                   Category
                 </label>
-                <input
-                  type="text"
+                <select
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
                   className="w-full rounded-xl border border-border px-4 py-3 outline-none focus:border-wine"
-                  placeholder="Event Category"
-                />
+                >
+                  <option value="">Select category</option>
+                  <option value="Photography">Photography</option>
+                  <option value="Videography">Videography</option>
+                  <option value="Catering">Catering</option>
+                  <option value="Decoration">Decoration</option>
+                  <option value="Event Planning">Event Planning</option>
+                  <option value="Venue Management">Venue Management</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Makeup & Styling">Makeup & Styling</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               {/* Description */}

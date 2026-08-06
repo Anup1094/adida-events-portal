@@ -32,22 +32,14 @@ export const getGalleryImage = async (id) => {
 // ================= CREATE IMAGE =================
 
 export const createGalleryImage = async (formData) => {
-  const { data } = await API.post("/gallery", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await API.post("/gallery", formData);
 
   return data;
 };
 
 export const uploadGalleryImage = async (formData) => {
   try {
-    const { data } = await API.post("/gallery", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await API.post("/gallery", formData);
     return {
       success: true,
       image: data.image,
@@ -64,11 +56,7 @@ export const uploadGalleryImage = async (formData) => {
 // ================= UPDATE IMAGE =================
 
 export const updateGalleryImage = async (id, formData) => {
-  const { data } = await API.put(`/gallery/${id}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await API.put(`/gallery/${id}`, formData);
 
   return data;
 };
