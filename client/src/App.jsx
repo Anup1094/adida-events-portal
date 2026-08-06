@@ -28,8 +28,8 @@ import AdminLayout from "./layouts/AdminLayout";
 
 // ================= LAZY IMPORTS =================
 
-const PublicLogin = lazy(() => import("./pages/public/Login"));
-const PublicSignup = lazy(() => import("./pages/public/Signup"));
+//const PublicLogin = lazy(() => import("./pages/public/Login"));
+//const PublicSignup = lazy(() => import("./pages/public/Signup"));
 
 const AdminLogin = lazy(() =>
   import("./pages/admin/Login")
@@ -171,15 +171,17 @@ const AppContent = () => {
 
             {/* ================= CUSTOMER AUTH ================= */}
 
-            <Route
-              path="/login"
-              element={<PublicLogin />}
-            />
+            {/*
+<Route
+  path="/login"
+  element={<PublicLogin />}
+/>
 
-            <Route
-              path="/signup"
-              element={<PublicSignup />}
-            />
+<Route
+  path="/signup"
+  element={<PublicSignup />}
+/>
+*/}
 
             {/* ================= ADMIN LOGIN ================= */}
 
