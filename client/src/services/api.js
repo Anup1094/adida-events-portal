@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://profound-serenity-production-c5d8.up.railway.app";
+const API_BASE_URL = "https://profound-serenity-production-c5d8.up.railway.app/api";
 
 const API = axios.create({
   baseURL: API_BASE_URL,
@@ -9,9 +9,7 @@ const API = axios.create({
   },
 });
 
-// Shared helper for resolving uploaded-file paths (e.g. "/uploads/x.jpg")
-// returned by the backend into full URLs against the same origin the API
-// client is configured for, without hardcoding that origin in every file.
+// Shared helper for resolving uploaded-file paths
 export const ASSET_BASE_URL = API_BASE_URL.replace(/\/api\/?$/, "");
 
 export const resolveAssetUrl = (path) => {
