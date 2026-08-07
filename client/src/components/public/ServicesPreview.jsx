@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { X, CalendarCheck } from "lucide-react";
 
 import { getPublicServices, resolveAssetUrl } from "../../services/public/serviceService";
 
@@ -22,6 +23,7 @@ export default function ServicesPreview() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -39,12 +41,21 @@ export default function ServicesPreview() {
     fetchServices();
   }, []);
 
+  // Lock page scroll while the modal is open
+  useEffect(() => {
+    document.body.style.overflow = selectedService ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedService]);
+
   const getServiceImage = (service) =>
     service.image
       ? resolveAssetUrl(service.image)
       : fallbackImages[service.title] || wedding;
 
-  const handleLearnMore = () => {
+  const handleBookThisService = () => {
+    setSelectedService(null);
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
@@ -153,7 +164,7 @@ export default function ServicesPreview() {
                     </p>
 
                     <button
-                      onClick={handleLearnMore}
+                      onClick={() => setSelectedService(service)}
                       className="mt-6 inline-flex items-center gap-2 font-semibold text-[#8d3f71] transition-all hover:gap-3"
                     >
                       Learn More →
@@ -172,6 +183,60 @@ export default function ServicesPreview() {
         )}
 
       </div>
+
+      {/* ================= SERVICE DETAIL MODAL ================= */}
+
+      {selectedService && (
+        <div
+          onClick={() => setSelectedService(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl"
+          >
+            <button
+              onClick={() => setSelectedService(null)}
+              className="absolute right-4 top-4 z-10 rounded-full bg-white/90 p-2 text-[#241528] shadow-md transition hover:bg-white"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+
+            <img
+              src={getServiceImage(selectedService)}
+              alt={selectedService.title}
+              className="h-64 w-full object-cover md:h-80"
+            />
+
+            <div className="p-8">
+
+              <span className="inline-block rounded-full bg-[#fbf1f6] px-4 py-1 text-xs font-semibold text-[#8d3f71]">
+                {selectedService.category}
+              </span>
+
+              <h3 className="mt-4 text-3xl font-serif text-[#241528]">
+                {selectedService.title}
+              </h3>
+
+              <p className="mt-4 text-gray-600 leading-8 whitespace-pre-line">
+                {selectedService.description}
+              </p>
+
+              <button
+                onClick={handleBookThisService}
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#8d3f71] px-6 py-3 font-semibold text-white transition hover:bg-[#742f5b]"
+              >
+                <CalendarCheck size={18} />
+                Enquire About This Service
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
