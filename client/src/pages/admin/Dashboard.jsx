@@ -6,7 +6,7 @@ import {
   MessageSquare,
   Briefcase,
   Image,
-  Users,
+  //Users,
   Plus,
 } from "lucide-react";
 
@@ -15,7 +15,7 @@ import { getEvents } from "../../services/admin/eventService";
 import { fetchGalleryImages } from "../../services/admin/galleryService";
 import { fetchServices } from "../../services/admin/serviceService";
 import { fetchEnquiries } from "../../services/admin/enquiryService";
-import { fetchCustomers } from "../../services/admin/userService";
+//import { fetchCustomers } from "../../services/admin/userService";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Dashboard = () => {
     gallery: 0,
     services: 0,
     enquiries: 0,
-    customers: 0,
+   // customers: 0,
   });
 
   const [recentEnquiries, setRecentEnquiries] = useState([]);
@@ -122,13 +122,13 @@ const Dashboard = () => {
           color="from-green-500 to-emerald-500"
         />
 
-        <StatCard
+        {/* <StatCard
           title="Customers"
           value={loading ? "..." : String(stats.customers)}
           subtitle="Registered accounts"
           icon={Users}
           color="from-wine to-gold"
-        />
+        /> */}
       </div>
 
       {/* Quick Actions */}
