@@ -39,6 +39,18 @@ export default function ServicesPreview() {
     fetchServices();
   }, []);
 
+  const getServiceImage = (service) =>
+    service.image
+      ? resolveAssetUrl(service.image)
+      : fallbackImages[service.title] || wedding;
+
+  const handleLearnMore = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="services"
@@ -97,9 +109,7 @@ export default function ServicesPreview() {
 
             {services.map((service) => {
 
-              const image = service.image
-                ? resolveAssetUrl(service.image)
-                : fallbackImages[service.title] || wedding;
+              const image = getServiceImage(service);
 
               return (
 
@@ -143,6 +153,7 @@ export default function ServicesPreview() {
                     </p>
 
                     <button
+                      onClick={handleLearnMore}
                       className="mt-6 inline-flex items-center gap-2 font-semibold text-[#8d3f71] transition-all hover:gap-3"
                     >
                       Learn More →
