@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import { getPublicServices, resolveAssetUrl } from "../../services/public/serviceService";
 
 import wedding from "../../assets/services/wedding.jpg";
 import engagement from "../../assets/services/engagement.jpg";
@@ -25,13 +26,8 @@ export default function ServicesPreview() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/services");
-
-        if (res.data.success) {
-          setServices(res.data.services);
-        } else {
-          setError(true);
-        }
+        const services = await getPublicServices();
+        setServices(services);
       } catch (err) {
         console.error(err);
         setError(true);
@@ -42,16 +38,6 @@ export default function ServicesPreview() {
 
     fetchServices();
   }, []);
-
-  const resolveAssetUrl = (path) => {
-    if (!path) return "";
-
-    if (path.startsWith("http")) {
-      return path;
-    }
-
-    return `http://localhost:5000${path}`;
-  };
 
   return (
     <section
