@@ -174,6 +174,10 @@ return (
 
                   <button
                     type="button"
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      navigate("/admin/profile");
+                    }}
                     className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-ink transition hover:bg-blush"
                   >
                     <User size={18} />

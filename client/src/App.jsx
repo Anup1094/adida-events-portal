@@ -75,6 +75,10 @@ const Settings = lazy(() =>
   import("./pages/admin/Settings")
 );
 
+const Profile = lazy(() =>
+  import("./pages/admin/Profile")
+);
+
 // ================= LOADER =================
 
 const PageLoader = () => (
@@ -277,6 +281,13 @@ const AppContent = () => {
               <Route
                 path="settings"
                 element={<Settings />}
+              />
+
+              {/* ================= MY PROFILE ================= */}
+
+              <Route
+                path="profile"
+                element={<Profile />}
               />
 
             </Route>

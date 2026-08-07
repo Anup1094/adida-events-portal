@@ -4,9 +4,6 @@ const API_BASE_URL = "https://profound-serenity-production-c5d8.up.railway.app/a
 
 const API = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // Shared helper for resolving uploaded-file paths

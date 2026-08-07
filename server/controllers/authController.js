@@ -1,3 +1,4 @@
+
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -170,6 +171,114 @@ export const adminLogin = async (req, res) => {
   } catch (error) {
     console.error(error);
 
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+ 
+// ================= GET MY PROFILE =================
+ 
+export const getMyProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+ 
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+ 
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+ 
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+ 
+// ================= UPDATE MY PROFILE =================
+ 
+export const updateMyProfile = async (req, res) => {
+  try {
+    const { name, email, phone, currentPassword, newPassword } = req.body;
+ 
+    const user = await User.findById(req.user.id);
+ 
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+ 
+    // If changing email, make sure it's not taken by someone else
+    if (email && email.toLowerCase() !== user.email) {
+      const existing = await User.findOne({ email: email.toLowerCase() });
+      if (existing) {
+        return res.status(409).json({
+          success: false,
+          message: "This email is already in use by another account.",
+        });
+      }
+      user.email = email.toLowerCase();
+    }
+ 
+    if (name) user.name = name;
+    if (phone !== undefined) user.phone = phone;
+ 
+    // Password change is optional — only if the user provided both fields
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({
+          success: false,
+          message: "Please enter your current password to set a new one.",
+        });
+      }
+ 
+      const isMatch = await user.matchPassword(currentPassword);
+ 
+      if (!isMatch) {
+        return res.status(401).json({
+          success: false,
+          message: "Current password is incorrect.",
+        });
+      }
+ 
+      if (newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: "New password must be at least 6 characters long.",
+        });
+      }
+ 
+      user.password = newPassword; // hashed automatically by the pre-save hook
+    }
+ 
+    await user.save();
+ 
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully.",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+ 
     res.status(500).json({
       success: false,
       message: "Server Error",
