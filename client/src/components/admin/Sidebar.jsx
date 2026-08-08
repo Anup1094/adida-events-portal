@@ -9,7 +9,6 @@ import {
   MessageSquare,
   Settings,
   Star,
-  Users,
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
@@ -18,7 +17,6 @@ import {
 const menuItems = [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Enquiries", path: "/admin/enquiries", icon: MessageSquare },
- // { name: "Customers", path: "/admin/customers", icon: Users },
   { name: "Events", path: "/admin/events", icon: CalendarDays },
   { name: "Gallery", path: "/admin/gallery", icon: Image },
   { name: "Services", path: "/admin/services", icon: Briefcase },

@@ -6,7 +6,6 @@ import {
   MessageSquare,
   Briefcase,
   Image,
-  //Users,
   Plus,
 } from "lucide-react";
 
@@ -15,7 +14,6 @@ import { getEvents } from "../../services/admin/eventService";
 import { fetchGalleryImages } from "../../services/admin/galleryService";
 import { fetchServices } from "../../services/admin/serviceService";
 import { fetchEnquiries } from "../../services/admin/enquiryService";
-//import { fetchCustomers } from "../../services/admin/userService";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,7 +23,6 @@ const Dashboard = () => {
     gallery: 0,
     services: 0,
     enquiries: 0,
-   // customers: 0,
   });
 
   const [recentEnquiries, setRecentEnquiries] = useState([]);
@@ -34,13 +31,12 @@ const Dashboard = () => {
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
-        const [eventsRes, galleryRes, servicesRes, enquiriesRes, customersRes] =
+        const [eventsRes, galleryRes, servicesRes, enquiriesRes] =
           await Promise.all([
             getEvents(),
             fetchGalleryImages(),
             fetchServices(),
             fetchEnquiries(),
-            fetchCustomers(),
           ]);
 
         setStats({
@@ -49,9 +45,6 @@ const Dashboard = () => {
           services: servicesRes.success ? servicesRes.services?.length || 0 : 0,
           enquiries: enquiriesRes.success
             ? enquiriesRes.enquiries?.length || 0
-            : 0,
-          customers: customersRes.success
-            ? customersRes.customers?.length || 0
             : 0,
         });
 
@@ -90,7 +83,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <StatCard
           title="Total Events"
           value={loading ? "..." : String(stats.events)}
@@ -121,14 +114,6 @@ const Dashboard = () => {
           icon={MessageSquare}
           color="from-green-500 to-emerald-500"
         />
-
-        {/* <StatCard
-          title="Customers"
-          value={loading ? "..." : String(stats.customers)}
-          subtitle="Registered accounts"
-          icon={Users}
-          color="from-wine to-gold"
-        /> */}
       </div>
 
       {/* Quick Actions */}
@@ -229,3 +214,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
