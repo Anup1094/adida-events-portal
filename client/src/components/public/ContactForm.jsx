@@ -23,7 +23,10 @@ const ContactForm = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -33,11 +36,13 @@ const ContactForm = () => {
 
     try {
       await API.post("/contact/submit", formData);
-      setStatus("Message sent successfully!");
+
+      setStatus("Enquiry sent successfully!");
       setFormData(initialState);
     } catch (error) {
       setStatus(
-        error.response?.data?.message || "Server error. Please try again later."
+        error.response?.data?.message ||
+          "Server error. Please try again later."
       );
     } finally {
       setSubmitting(false);
@@ -45,27 +50,39 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="bg-blush py-2 pt-0.5">
+    <section
+      id="contact"
+      className="bg-blush py-16 md:py-20 scroll-mt-20"
+    >
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
-          {/* Left: Info */}
+
+        {/* Section Header */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+          {/* Left: Contact Information */}
           <div>
             <p className="font-heading uppercase tracking-[0.3em] text-wine font-semibold text-sm">
-              Contact Us
-            </p>
-            <h2 className="mt-2 font-display text-4xl md:text-5xl text-ink">
-              Get in Touch
-            </h2>
-            <p className="mt-2 text-ink-muted leading-7 font-sans max-w-md">
-              Ready to plan your next big event? Contact us today for a free
-              consultation and quotation.
+              Book Your Event
             </p>
 
-            <div className="mt-3 space-y-5 font-sans">
+            <h2 className="mt-3 font-display text-4xl md:text-5xl text-ink leading-tight">
+              Let&apos;s Create Something Unforgettable
+            </h2>
+
+            <p className="mt-4 text-ink-muted leading-7 font-sans max-w-md">
+              Tell us about your event and our team will get in touch with
+              you to discuss your requirements, ideas, and planning details.
+            </p>
+
+            {/* Contact Details */}
+            <div className="mt-8 space-y-5 font-sans">
+
+              {/* Address */}
               <div className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
                   <MapPin size={17} />
                 </span>
+
                 <span className="text-ink-muted leading-6 mt-0.5">
                   1/6979 Street No-2, Shivaji Park
                   <br />
@@ -73,22 +90,32 @@ const ContactForm = () => {
                 </span>
               </div>
 
+              {/* Phone */}
               <div className="flex items-center gap-4">
-                <span className="flex h-3 w-9 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
                   <Phone size={17} />
                 </span>
-                <span className="text-ink-muted">9650466106</span>
+
+                <span className="text-ink-muted">
+                  9650466106
+                </span>
               </div>
 
+              {/* Email */}
               <div className="flex items-center gap-4">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface border border-border text-wine">
                   <Mail size={17} />
                 </span>
-                <span className="text-ink-muted">adidaevents@gmail.com</span>
+
+                <span className="text-ink-muted">
+                  adidaevents@gmail.com
+                </span>
               </div>
+
             </div>
 
-            <div className="mt-3 overflow-hidden rounded-2xl border border-border shadow-[0_20px_50px_rgba(36,21,40,0.08)]">
+            {/* Map */}
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border shadow-[0_20px_50px_rgba(36,21,40,0.08)]">
               <iframe
                 title="Adida Events Location"
                 width="100%"
@@ -101,9 +128,30 @@ const ContactForm = () => {
             </div>
           </div>
 
-          {/* Right: Form */}
-          <div className="rounded-3xl border border-border bg-surface p-8 shadow-[0_20px_50px_rgba(36,21,40,0.08)]">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 font-sans">
+          {/* Right: Event Enquiry Form */}
+          <div className="rounded-3xl border border-border bg-surface p-7 md:p-8 shadow-[0_20px_50px_rgba(36,21,40,0.08)]">
+
+            {/* Form Header */}
+            <div className="mb-6">
+              <p className="font-heading uppercase tracking-[0.2em] text-wine text-xs font-semibold">
+                Event Enquiry
+              </p>
+
+              <h3 className="mt-2 font-heading text-2xl text-ink">
+                Tell Us About Your Event
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-ink-muted">
+                Share a few details and we&apos;ll get back to you shortly.
+              </p>
+            </div>
+
+            {/* Form */}
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4 font-sans"
+            >
+              {/* Inputs */}
               {fields.map((field) => (
                 <input
                   key={field.name}
@@ -112,34 +160,44 @@ const ContactForm = () => {
                   placeholder={field.label}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  required={field.name !== "phone" && field.name !== "location"}
+                  required={
+                    field.name !== "phone" &&
+                    field.name !== "location"
+                  }
                   className="rounded-xl border border-border bg-ivory px-4 py-3.5 text-ink outline-none transition placeholder:text-ink-muted focus:border-wine focus:ring-4 focus:ring-wine/10"
                 />
               ))}
 
+              {/* Message */}
               <textarea
                 name="message"
                 placeholder="Message / Event Type"
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows={4}
+                rows={5}
                 className="rounded-xl border border-border bg-ivory px-4 py-3.5 text-ink outline-none transition placeholder:text-ink-muted focus:border-wine focus:ring-4 focus:ring-wine/10 resize-none"
               />
 
+              {/* Submit */}
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-1 rounded-xl bg-wine py-3.5 font-heading font-semibold text-ivory transition-colors duration-300 hover:bg-wine-dark disabled:cursor-not-allowed disabled:opacity-70"
+                className="mt-1 rounded-xl bg-wine py-3.5 font-heading font-semibold text-ivory transition-all duration-300 hover:bg-wine-dark hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {submitting ? "Sending..." : "Send Enquiry"}
+                {submitting
+                  ? "Sending Enquiry..."
+                  : "Book My Event"}
               </button>
             </form>
 
+            {/* Status Message */}
             {status && (
               <p
                 className={`mt-4 text-center text-sm font-heading font-medium ${
-                  status.includes("successfully") ? "text-green-700" : "text-red-600"
+                  status.includes("successfully")
+                    ? "text-green-700"
+                    : "text-red-600"
                 }`}
               >
                 {status}

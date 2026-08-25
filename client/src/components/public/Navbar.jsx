@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Menu, X, ShieldCheck, User, LogOut } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { Menu, X, ShieldCheck } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/logo.svg";
-import { getCurrentUser, logoutCustomer } from "../../services/public/authService";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -18,23 +17,41 @@ const navItems = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [customer, setCustomer] = useState(() => getCurrentUser());
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  const closeMenu = () => setIsOpen(false);
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
-  const handleLogout = () => {
-    logoutCustomer();
-    setCustomer(null);
+  // Smooth scroll helper
+  const handleSectionClick = (e, href) => {
+    if (!href.startsWith("#")) return;
+
+    e.preventDefault();
+
+    const section = document.querySelector(href);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
     closeMenu();
-    navigate("/");
   };
 
   return (
@@ -47,67 +64,72 @@ const Navbar = () => {
     >
       <div className="max-w-[1320px] mx-auto px-5 lg:px-8">
         <div className="h-16 lg:h-[68px] flex items-center justify-between">
+
           {/* Logo */}
-          <motion.a
+          <a
             href="#hero"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.2 }}
+            onClick={(e) => handleSectionClick(e, "#hero")}
             className="flex items-center"
           >
-            <img src={logo} alt="Adida Events" className="h-9 lg:h-10 w-auto" />
-          </motion.a>
+            <motion.img
+              src={logo}
+              alt="Adida Events"
+              className="h-9 lg:h-10 w-auto"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.2 }}
+            />
+          </a>
 
           {/* Desktop Menu */}
-{/* Desktop Menu */}
-<div className="hidden lg:flex items-center gap-7 font-heading">
-  {navItems.map((item) => (
-    <a
-      key={item.name}
-      href={item.href}
-      className="group relative flex flex-col items-center text-[14px] font-medium tracking-wide text-ink/80 transition-colors hover:text-wine"
-    >
-      {item.name}
-      <span className="mt-1.5 h-[7px] w-[7px] rotate-45 scale-0 rounded-[1px] bg-gold transition-transform duration-300 group-hover:scale-100" />
-    </a>
-  ))}
-</div>
+          <div className="hidden lg:flex items-center gap-7 font-heading">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleSectionClick(e, item.href)}
+              className="rounded-full bg-wine px-5 py-2.5 text-[14px] font-semibold text-ivory transition-colors duration-300 hover:bg-wine-dark">
+                {item.name}
 
-{/* Right Side Desktop */}
-<div className="hidden lg:flex items-center gap-3">
+                <span className="mt-1.5 h-[7px] w-[7px] rotate-45 scale-0 rounded-[1px] bg-gold transition-transform duration-300 group-hover:scale-100" />
+              </a>
+            ))}
+          </div>
 
-  <a
-    href="#contact"
-    className="rounded-full bg-wine px-5 py-2.5 text-[14px] font-semibold text-ivory transition-colors duration-300 hover:bg-wine-dark"
-  >
-    Book an Event
-  </a>
+          {/* Right Side Desktop */}
+          <div className="hidden lg:flex items-center gap-3">
 
-  <NavLink
-    to="/admin/login"
-    aria-label="Admin Login"
-    title="Admin Login"
-    className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border text-ink/50 transition-colors duration-300 hover:border-wine hover:text-wine"
-  >
-    <ShieldCheck size={16} />
-  </NavLink>
+            {/* Book an Event */}
+            <a
+              href="#contact"
+              onClick={(e) => handleSectionClick(e, "#contact")}
+              className="rounded-full bg-wine px-5 py-2.5 text-[14px] font-semibold text-ivory transition-all duration-300 hover:bg-wine-dark hover:scale-[1.03]"
+            >
+              Book an Event
+            </a>
 
-</div>
+            {/* Admin Login */}
+            <NavLink
+              to="/admin/login"
+              aria-label="Admin Login"
+              title="Admin Login"
+              className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border text-ink/50 transition-colors duration-300 hover:border-wine hover:text-wine"
+            >
+              <ShieldCheck size={16} />
+            </NavLink>
+          </div>
 
-{/* Mobile Hamburger */}
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="lg:hidden text-ink"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+      </div>
 
-<button
-  onClick={() => setIsOpen(!isOpen)}
-  aria-label={isOpen ? "Close menu" : "Open menu"}
-  className="lg:hidden text-ink"
->
-  {isOpen ? <X size={28} /> : <Menu size={28} />}
-</button>
-
-</div>
-</div>
-
-{/* Mobile Menu */}
-
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -119,25 +141,28 @@ const Navbar = () => {
           >
             <div className="flex flex-col px-6 py-5">
 
+              {/* Mobile Navigation */}
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={closeMenu}
+                  onClick={(e) => handleSectionClick(e, item.href)}
                   className="border-b border-border/70 py-4 text-ink hover:text-wine"
                 >
                   {item.name}
                 </a>
               ))}
 
+              {/* Mobile Book Event */}
               <a
                 href="#contact"
-                onClick={closeMenu}
-                className="mt-6 rounded-full bg-wine py-3 text-center font-semibold text-ivory"
+                onClick={(e) => handleSectionClick(e, "#contact")}
+                className="mt-6 rounded-full bg-wine py-3 text-center font-semibold text-ivory transition-colors duration-300 hover:bg-wine-dark"
               >
                 Book an Event
               </a>
 
+              {/* Mobile Admin Login */}
               <NavLink
                 to="/admin/login"
                 onClick={closeMenu}
@@ -146,7 +171,6 @@ const Navbar = () => {
                 <ShieldCheck size={16} />
                 Admin Login
               </NavLink>
-
             </div>
           </motion.div>
         )}
