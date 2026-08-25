@@ -11,12 +11,12 @@ import corporate from "../../assets/services/corporate.jpg";
 import babyshower from "../../assets/services/babyshower.jpg";
 
 const fallbackImages = {
-  Wedding: wedding,
-  Engagement: engagement,
-  Birthday: birthday,
-  Anniversary: anniversary,
-  Corporate: corporate,
-  "Baby Shower": babyshower,
+  wedding,
+  engagement,
+  birthday,
+  anniversary,
+  corporate,
+  babyshower,
 };
 
 export default function ServicesPreview() {
@@ -49,10 +49,50 @@ export default function ServicesPreview() {
     };
   }, [selectedService]);
 
-  const getServiceImage = (service) =>
-    service.image
-      ? resolveAssetUrl(service.image)
-      : fallbackImages[service.title] || wedding;
+const getServiceImage = (service) => {
+  // If admin uploaded an image, always use that image
+  if (service.image) {
+    return resolveAssetUrl(service.image);
+  }
+
+  // Otherwise choose a local fallback image
+  // based on the service title.
+  const title = service.title?.toLowerCase() || "";
+
+  if (title.includes("wedding")) {
+    return fallbackImages.wedding;
+  }
+
+  if (title.includes("engagement") || title.includes("ring")) {
+    return fallbackImages.engagement;
+  }
+
+  if (title.includes("birthday")) {
+    return fallbackImages.birthday;
+  }
+
+  if (title.includes("anniversary")) {
+    return fallbackImages.anniversary;
+  }
+
+  if (
+    title.includes("corporate") ||
+    title.includes("office") ||
+    title.includes("conference")
+  ) {
+    return fallbackImages.corporate;
+  }
+
+  if (
+    title.includes("baby shower") ||
+    title.includes("babyshower")
+  ) {
+    return fallbackImages.babyshower;
+  }
+
+  // Default image
+  return fallbackImages.wedding;
+};
 
   const handleBookThisService = () => {
     setSelectedService(null);
