@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // ================= PUBLIC COMPONENTS =================
 
+import TermsOfService from "./pages/public/TermsOfService";
+import PrivacyPolicy from "./pages/public/PrivacyPolicy";
 import Navbar from "./components/public/Navbar";
 import HeroBanner from "./components/public/HeroBanner";
 import AboutUs from "./components/public/AboutUs";
@@ -147,6 +149,17 @@ const AppContent = () => {
             {/* ================= PUBLIC ROUTES ================= */}
 
             <Route path="/" element={<HomePage />} />
+
+              <Route
+              path="/terms-of-service"
+              element={<TermsOfService />}
+            />
+            
+            <Route
+              path="/privacy-policy"
+              element={<PrivacyPolicy />}
+            />
+
 
             <Route
               path="/services"
