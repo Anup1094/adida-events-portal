@@ -87,7 +87,8 @@ const Navbar = () => {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleSectionClick(e, item.href)}
-              className="rounded-full bg-wine px-5 py-2.5 text-[14px] font-semibold text-ivory transition-colors duration-300 hover:bg-wine-dark">
+                className="group relative flex flex-col items-center text-[14px] font-medium tracking-wide text-ink/80 transition-colors hover:text-wine"
+              >
                 {item.name}
 
                 <span className="mt-1.5 h-[7px] w-[7px] rotate-45 scale-0 rounded-[1px] bg-gold transition-transform duration-300 group-hover:scale-100" />
